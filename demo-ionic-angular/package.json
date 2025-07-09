@@ -27,7 +27,7 @@
     "@capacitor/ios": "^7.4.1",
     "@capacitor/keyboard": "^7.0.1",
     "@capacitor/status-bar": "^7.0.1",
-    "@codetrix-studio/capacitor-google-auth": "file:..",
+    "@WMOH-DEV/capacitor-google-auth": "file:..",
     "@ionic/angular": "^8.0.0",
     "ionicons": "^7.4.0",
     "rxjs": "~7.8.0",
