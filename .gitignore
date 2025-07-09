@@ -76,3 +76,4 @@ demo-ionic-angular/android/app/src/androidTest/java/com/getcapacitor/myapp/Examp
 demo-ionic-angular/android/app/proguard-rules.pro
 demo-ionic-angular/android/app/capacitor.build.gradle
 demo-ionic-angular/android/app/build.gradle
+.vscode/settings.json
