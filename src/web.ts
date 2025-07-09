@@ -44,9 +44,7 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
       return Promise.resolve();
     }
 
-    const metaClientId = (
-      document.getElementsByName('google-signin-client_id')[0] as HTMLMetaElement
-    )?.content;
+    const metaClientId = (document.getElementsByName('google-signin-client_id')[0] as HTMLMetaElement)?.content;
     const clientId = _options.clientId || metaClientId || '';
 
     if (!clientId) {
@@ -82,37 +80,31 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
       }
 
       gapi.auth2.init(clientConfig);
-      (window as any).gapiResolve();
+      (window as unknown as Window & { gapiResolve: () => void }).gapiResolve();
     });
   }
 
-  async signIn() {
-    return new Promise<User>(async (resolve, reject) => {
-      try {
-        let serverAuthCode: string | undefined;
-        const needsOfflineAccess = this.options.grantOfflineAccess ?? false;
+  async signIn(): Promise<User> {
+    let serverAuthCode: string | undefined;
+    const needsOfflineAccess = this.options.grantOfflineAccess ?? false;
 
-        if (needsOfflineAccess) {
-          const offlineAccessResponse = await gapi.auth2.getAuthInstance().grantOfflineAccess();
-          serverAuthCode = offlineAccessResponse.code;
-        } else {
-          await gapi.auth2.getAuthInstance().signIn();
-        }
+    if (needsOfflineAccess) {
+      const offlineAccessResponse = await gapi.auth2.getAuthInstance().grantOfflineAccess();
+      serverAuthCode = offlineAccessResponse.code;
+    } else {
+      await gapi.auth2.getAuthInstance().signIn();
+    }
 
-        const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+    const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
 
-        if (needsOfflineAccess) {
-          // HACK: AuthResponse is null if we don't do this when using grantOfflineAccess
-          await googleUser.reloadAuthResponse();
-        }
+    if (needsOfflineAccess) {
+      // HACK: AuthResponse is null if we don't do this when using grantOfflineAccess
+      await googleUser.reloadAuthResponse();
+    }
 
-        const user = this.getUserFrom(googleUser);
-        user.serverAuthCode = serverAuthCode || '';
-        resolve(user);
-      } catch (error) {
-        reject(error);
-      }
-    });
+    const user = this.getUserFrom(googleUser);
+    user.serverAuthCode = serverAuthCode || '';
+    return user;
   }
 
   async refresh() {

@@ -158,5 +158,5 @@ export interface GoogleAuthPlugin {
   /**
    * Signs out the user and returns a Promise.
    */
-  signOut(): Promise<any>;
+  signOut(): Promise<void>;
 }
