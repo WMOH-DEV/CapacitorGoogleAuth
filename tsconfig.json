@@ -3,7 +3,10 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2017"],
+    "lib": [
+      "dom",
+      "es2017"
+    ],
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -12,7 +15,13 @@
     "outDir": "dist/esm",
     "sourceMap": true,
     "skipLibCheck": true,
-    "target": "es2017"
+    "target": "es2017",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "strict": true
   },
-  "files": ["src/index.ts"]
+  "files": [
+    "src/index.ts"
+  ]
 }

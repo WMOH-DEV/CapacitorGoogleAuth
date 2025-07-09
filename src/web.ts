@@ -2,8 +2,8 @@ import { WebPlugin } from '@capacitor/core';
 import { GoogleAuthPlugin, InitOptions, User } from './definitions';
 
 export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
-  gapiLoaded: Promise<void>;
-  options: InitOptions;
+  gapiLoaded!: Promise<void>;
+  options!: InitOptions;
 
   constructor() {
     super();
@@ -38,13 +38,15 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
       clientId: '',
       scopes: [],
       grantOfflineAccess: false,
-    }
+    },
   ): Promise<void> {
     if (typeof window === 'undefined') {
-      return;
+      return Promise.resolve();
     }
 
-    const metaClientId = (document.getElementsByName('google-signin-client_id')[0] as any)?.content;
+    const metaClientId = (
+      document.getElementsByName('google-signin-client_id')[0] as HTMLMetaElement
+    )?.content;
     const clientId = _options.clientId || metaClientId || '';
 
     if (!clientId) {
@@ -59,7 +61,7 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
 
     this.gapiLoaded = new Promise((resolve) => {
       // HACK: Relying on window object, can't get property in gapi.load callback
-      (window as any).gapiResolve = resolve;
+      (window as unknown as Window & { gapiResolve: () => void }).gapiResolve = resolve;
       this.loadScript();
     });
 
@@ -75,7 +77,7 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
         plugin_name: 'CodetrixStudioCapacitorGoogleAuth',
       };
 
-      if (this.options.scopes.length) {
+      if (this.options.scopes && this.options.scopes.length) {
         clientConfig.scope = this.options.scopes.join(' ');
       }
 
@@ -87,7 +89,7 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
   async signIn() {
     return new Promise<User>(async (resolve, reject) => {
       try {
-        let serverAuthCode: string;
+        let serverAuthCode: string | undefined;
         const needsOfflineAccess = this.options.grantOfflineAccess ?? false;
 
         if (needsOfflineAccess) {
@@ -105,7 +107,7 @@ export class GoogleAuthWeb extends WebPlugin implements GoogleAuthPlugin {
         }
 
         const user = this.getUserFrom(googleUser);
-        user.serverAuthCode = serverAuthCode;
+        user.serverAuthCode = serverAuthCode || '';
         resolve(user);
       } catch (error) {
         reject(error);

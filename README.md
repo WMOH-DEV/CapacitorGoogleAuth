@@ -4,7 +4,7 @@
 
 <h1 align="center">CapacitorGoogleAuth</h1>
 <p align="center"><strong><code>@codetrix-studio/capacitor-google-auth</code></strong></p>
-<p align="center"><strong>CAPACITOR 6</strong></p>
+<p align="center"><strong>CAPACITOR 7</strong></p>
 <p align="center">
 Capacitor plugin for Google Auth.
 </p>
@@ -13,7 +13,18 @@ Capacitor plugin for Google Auth.
 <a href="https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth"><img alt="npm" src="https://img.shields.io/npm/v/@codetrix-studio/capacitor-google-auth"></a> <a href="https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth"><img alt="npm" src="https://img.shields.io/npm/dt/@codetrix-studio/capacitor-google-auth"></a> <a href="https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth"><img alt="npm" src="https://img.shields.io/npm/dw/@codetrix-studio/capacitor-google-auth"></a> <a href="https://libraries.io/npm/@codetrix-studio%2Fcapacitor-google-auth"><img alt="Dependents (via libraries.io)" src="https://img.shields.io/librariesio/dependents/npm/@codetrix-studio/capacitor-google-auth"></a> <a href="https://packagephobia.com/result?p=@codetrix-studio/capacitor-google-auth"><img alt="install size" src="https://packagephobia.com/badge?p=@codetrix-studio/capacitor-google-auth"></a>
 </p>
 
-## Breaking change in V6
+## Breaking change in V7
+
+This version has been updated to support **Capacitor 7.4.1** and includes the following major updates:
+
+- Updated all dependencies to latest versions
+- Removed deprecated `jcenter()` repository in favor of `mavenCentral()`
+- Updated Android Gradle Plugin to 8.2.1
+- Updated Google Services to 4.4.2
+- Updated GoogleSignIn iOS SDK to 7.1.0
+- Updated TypeScript to 5.3.3
+- Added strict TypeScript configuration
+- Enhanced demo projects with latest Angular 17 and Ionic 8
 
 In the v6 version, `clientId` in the initialize method is used in priority over other places you could set up. If before you were using this only on the web, unset it on mobile. Or set it conditionally to replicate old behavior.
 
@@ -34,10 +45,10 @@ PRs for features that are not aligned with the official Google Auth library are 
 ```sh
 npm i --save @codetrix-studio/capacitor-google-auth
 
-# pnpm 
+# pnpm
 pnpm add @codetrix-studio/capacitor-google-auth
 
-# yarn 
+# yarn
 yarn add @codetrix-studio/capacitor-google-auth
 ```
 
@@ -160,6 +171,7 @@ or see more [CapacitorGoogleAuth-Vue3-example](https://github.com/reslear/Capaci
 ### Android
 
 Set **Client ID** (by order of importance in the plugin):
+
 1. Set `clientId` in initialize method
 2. Set `androidClientId` in `capacitor.config.json`
 3. Set `clientId` in `capacitor.config.json`
@@ -178,6 +190,7 @@ This plugin uses `com.google.android.gms:play-services-auth:21.2.0` by default, 
 **Refresh method**
 
 This method should be called when the app is initialized to establish if the user is currently logged in. If true, the method will return an accessToken, idToken and an empty refreshToken.
+
 ```ts
 checkLoggedIn() {
     GoogleAuth.refresh()
@@ -236,17 +249,18 @@ const config: CapacitorConfig = {
 
 export default config;
 ```
+
 #### Note: scopes can be configured under <code><a href="#initialize">initialize</a></code> function.
 
 ## API
 
 <docgen-index>
 
-* [`initialize(...)`](#initialize)
-* [`signIn()`](#signin)
-* [`refresh()`](#refresh)
-* [`signOut()`](#signout)
-* [Interfaces](#interfaces)
+- [`initialize(...)`](#initialize)
+- [`signIn()`](#signin)
+- [`refresh()`](#refresh)
+- [`signOut()`](#signout)
+- [Interfaces](#interfaces)
 
 </docgen-index>
 <docgen-api>
@@ -266,8 +280,7 @@ Initializes the GoogleAuthPlugin, loading the gapi library and setting up the pl
 
 **Since:** 3.1.0
 
---------------------
-
+---
 
 ### signIn()
 
@@ -279,8 +292,7 @@ Initiates the sign-in process and returns a Promise that resolves with the user 
 
 **Returns:** <code>Promise&lt;<a href="#user">User</a>&gt;</code>
 
---------------------
-
+---
 
 ### refresh()
 
@@ -292,8 +304,7 @@ Refreshes the authentication token and returns a Promise that resolves with the 
 
 **Returns:** <code>Promise&lt;<a href="#authentication">Authentication</a>&gt;</code>
 
---------------------
-
+---
 
 ### signOut()
 
@@ -305,11 +316,9 @@ Signs out the user and returns a Promise.
 
 **Returns:** <code>Promise&lt;any&gt;</code>
 
---------------------
-
+---
 
 ### Interfaces
-
 
 #### InitOptions
 
@@ -318,7 +327,6 @@ Signs out the user and returns a Promise.
 | **`clientId`**           | <code>string</code>   | The app's client ID, found and created in the Google Developers Console. Common for Android or iOS. The default is defined in the configuration. |                    | 3.1.0      |
 | **`scopes`**             | <code>string[]</code> | Specifies the scopes required for accessing Google APIs The default is defined in the configuration.                                             |                    | 3.4.0-rc.4 |
 | **`grantOfflineAccess`** | <code>boolean</code>  | Set if your application needs to refresh access tokens when the user is not present at the browser. In response use `serverAuthCode` key         | <code>false</code> | 3.1.0      |
-
 
 #### User
 
@@ -332,7 +340,6 @@ Signs out the user and returns a Promise.
 | **`imageUrl`**       | <code>string</code>                                       | The URL of the user's profile picture.                              |
 | **`serverAuthCode`** | <code>string</code>                                       | The server authentication code.                                     |
 | **`authentication`** | <code><a href="#authentication">Authentication</a></code> | The authentication details including access, refresh and ID tokens. |
-
 
 #### Authentication
 
