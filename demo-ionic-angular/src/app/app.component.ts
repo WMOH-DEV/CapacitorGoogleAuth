@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { GoogleAuth } from '@WMOH-DEV/capacitor-google-auth';
 import { Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
@@ -9,22 +9,18 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(
-    private platform: Platform,
-  ) {
+  constructor(private platform: Platform) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      console.log('READY!')
-      GoogleAuth.initialize(
-        {
-        clientId:environment.clientID,
+      console.log('READY!');
+      GoogleAuth.initialize({
+        clientId: environment.clientID,
         scopes: ['profile', 'email'],
         grantOfflineAccess: true,
-      }
-      )
-    })
+      });
+    });
   }
 }

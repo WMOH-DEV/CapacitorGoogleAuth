@@ -131,7 +131,7 @@ This document outlines the comprehensive upgrade of the Capacitor Google Auth pl
 2. Update the plugin:
 
    ```bash
-   npm install @codetrix-studio/capacitor-google-auth@latest
+   npm install @WMOH-DEV@latest
    npx cap sync
    ```
 
